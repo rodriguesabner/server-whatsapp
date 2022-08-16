@@ -1,0 +1,39 @@
+2022/08/16-00:05:04.588 1a57c Reusing MANIFEST /home/rodriguesabner/NodeProjects/server-wppconnect/tokens/Meu bot/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/08/16-00:05:04.588 1a57c Recovering log #491
+2022/08/16-00:05:04.606 1a57c Reusing old log /home/rodriguesabner/NodeProjects/server-wppconnect/tokens/Meu bot/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000491.log 
+2022/08/16-00:06:10.396 1a5b7 Level-0 table #503: started
+2022/08/16-00:06:10.432 1a5b7 Level-0 table #503: 1227577 bytes OK
+2022/08/16-00:06:10.435 1a5b7 Delete type=0 #491
+2022/08/16-00:06:16.039 1a579 Compacting 1@0 + 1@1 files
+2022/08/16-00:06:16.106 1a579 Generated table #504@0: 18124 keys, 514642 bytes
+2022/08/16-00:06:16.114 1a579 Generated table #505@0: 4358 keys, 95004 bytes
+2022/08/16-00:06:16.114 1a579 Compacted 1@0 + 1@1 files => 609646 bytes
+2022/08/16-00:06:16.116 1a579 compacted to: files[ 0 2 13 0 0 0 0 ]
+2022/08/16-00:06:16.116 1a579 Delete type=2 #479
+2022/08/16-00:06:16.116 1a579 Delete type=2 #503
+2022/08/16-00:06:43.723 1a5b7 Compacting 1@1 + 11@2 files
+2022/08/16-00:06:43.784 1a5b7 Generated table #506@1: 35791 keys, 2265366 bytes
+2022/08/16-00:06:43.849 1a5b7 Generated table #507@1: 59383 keys, 2284701 bytes
+2022/08/16-00:06:43.881 1a5b7 Generated table #508@1: 8414 keys, 2165792 bytes
+2022/08/16-00:06:43.908 1a5b7 Generated table #509@1: 3303 keys, 2154759 bytes
+2022/08/16-00:06:43.934 1a5b7 Generated table #510@1: 3536 keys, 2147736 bytes
+2022/08/16-00:06:43.988 1a5b7 Generated table #511@1: 32174 keys, 2260165 bytes
+2022/08/16-00:06:44.037 1a5b7 Generated table #512@1: 19906 keys, 2206111 bytes
+2022/08/16-00:06:44.070 1a5b7 Generated table #513@1: 8088 keys, 2132482 bytes
+2022/08/16-00:06:44.167 1a5b7 Generated table #514@1: 98657 keys, 2246963 bytes
+2022/08/16-00:06:44.233 1a5b7 Generated table #515@1: 105096 keys, 2255126 bytes
+2022/08/16-00:06:44.238 1a5b7 Generated table #516@1: 6658 keys, 142831 bytes
+2022/08/16-00:06:44.238 1a5b7 Compacted 1@1 + 11@2 files => 22262032 bytes
+2022/08/16-00:06:44.241 1a5b7 compacted to: files[ 0 1 13 0 0 0 0 ]
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #498
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #504
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #496
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #499
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #488
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #495
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #493
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #487
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #500
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #497
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #489
+2022/08/16-00:06:44.241 1a5b7 Delete type=2 #494
