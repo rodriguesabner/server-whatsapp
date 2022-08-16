@@ -2,23 +2,12 @@ import { createServer } from 'http';
 import Server from './server';
 import config from './config';
 
-// @ts-ignore
-global.wppconnect = config;
-
 const http = createServer(Server);
 
 const server = http.listen(config.web.port, () => {
-  // @ts-ignore
-  const host = server.address()?.address;
-  // @ts-ignore
-  const port = server.address()?.port;
-
+  const NODE_ENV = config.web.env || 'development';
   console.log(
-    'App %s %s listening at http://%s:%s',
-    config.name,
-    config.version,
-    host,
-    port,
+    `App is running on port ${config.web.port} in ${NODE_ENV} mode`,
   );
 });
 
