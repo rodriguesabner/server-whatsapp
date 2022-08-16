@@ -28,7 +28,7 @@ async function numberExists(req: Request, res: Response, next: NextFunction) {
 
     phones.forEach((phone: string) => {
       tasksValidPhone.push(
-        whatsapp.checkNumberStatus(phone)
+        whatsapp.checkNumberStatus(phone.trim())
           .catch((): any => null),
       );
     });
