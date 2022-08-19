@@ -65,6 +65,62 @@ class MessageService {
       throw new Error(e);
     }
   }
+
+  async sendVideo(props: MessageProps) {
+    try {
+      const phones = this.sanitizePhone(props.to);
+      const tasks: any = [];
+
+      phones.forEach((phone) => {
+        tasks.push(
+          this.whatsapp.sendFile(
+            phone,
+            <string>props.image?.path,
+            props.image?.filename,
+          ),
+        );
+      });
+
+      const ret = await Promise.all(tasks);
+      return {
+        messaging_product: 'whatsapp',
+        type: 'image',
+        contacts: [...phones],
+        messages: ret.map((r: Message) => r.id),
+      };
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
+
+  async sendLocation(props: MessageProps) {
+    try {
+      const phones = this.sanitizePhone(props.to);
+      const tasks: any = [];
+
+      phones.forEach((phone) => {
+        tasks.push(
+          this.whatsapp.sendLocation(
+            phone,
+            // @ts-ignore
+            props.location?.latitude,
+            props.location?.longitude,
+            props.location?.name,
+          ),
+        );
+      });
+
+      const ret = await Promise.all(tasks);
+      return {
+        messaging_product: 'whatsapp',
+        type: 'image',
+        contacts: [...phones],
+        messages: ret.map((r: Message) => r.id),
+      };
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
 }
 
 export default MessageService;
