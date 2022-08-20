@@ -86,7 +86,7 @@ Body:
 }
 ```
 
-Check interface to send another types (location, image...): https://github.com/rodriguesabner/server-whatsapp/blob/master/src/interface/message.ts#L15
+Check interface to send another types (location, image...): https://github.com/rodriguesabner/server-whatsapp/blob/master/src/interface/message.ts#L35
 ## Roadmap
 
 - Unit tests
