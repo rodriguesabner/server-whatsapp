@@ -75,7 +75,18 @@ To run this project, you will need to add the following environment variables to
 
 Body:
 
-Check interface: https://github.com/rodriguesabner/server-whatsapp/blob/master/src/interface/message.ts#L15
+```json
+{
+	"to": "NUMBER_HERE@c.us, MULTIPLE_NUMBERS_ACCEPTED@c.us",
+	"type": "text",
+	"recipient_type": "individual",
+	"text": {
+		"body": "Oi"  
+	}
+}
+```
+
+Check interface to send another types (location, image...): https://github.com/rodriguesabner/server-whatsapp/blob/master/src/interface/message.ts#L15
 ## Roadmap
 
 - Unit tests
