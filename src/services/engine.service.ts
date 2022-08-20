@@ -2,47 +2,11 @@ import { create, Whatsapp } from '@wppconnect-team/wppconnect';
 import BaseEngine from '../common/baseEngine';
 
 class EngineService extends BaseEngine {
-  private sessions: any;
+  public sessions: any;
 
   constructor({ sessions }: {sessions: any}) {
-    super();
+    super({ sessions });
     this.sessions = sessions;
-  }
-
-  async createSession(props: any) {
-    try {
-      const client: Whatsapp = this.getClient(this.sessions, props.session);
-
-      const wppClient = await create(
-        {
-          session: props.session,
-          deviceName: props.deviceName,
-          poweredBy: props.poweredBy || 'WPPConnect-Server',
-          catchQR: (base64Qr, asciiQR, attempt, urlCode) => {
-            this.exportQR(base64Qr, client, urlCode);
-          },
-          statusFind: (statusFind) => {
-            try {
-              if (statusFind === 'autocloseCalled' || statusFind === 'desconnectedMobile') {
-                client.close();
-                this.sessions[props.session] = undefined;
-              }
-
-              // TODO: implement webhook
-              // callWebHook(client, req, 'status-find', { status: statusFind });
-            } catch (error: any) {
-              throw new Error(error);
-            }
-          },
-        },
-      );
-
-      Object.assign(client, { instance: wppClient });
-      this.sessions = { ...this.sessions, [props.session]: client };
-      await this.start(client);
-    } catch (e: any) {
-      throw new Error(e);
-    }
   }
 
   async start(client: any) {
@@ -72,6 +36,54 @@ class EngineService extends BaseEngine {
 
     // TODO: implement webhook
     // callWebHook(client, req, 'qrcode', { qrcode: newQrCode, urlCode: urlCode });
+  }
+
+  async createSession(props: any) {
+    try {
+      const client: Whatsapp = this.getClient(props.session);
+
+      const wppClient = await create(
+        {
+          session: props.session,
+          deviceName: props.deviceName,
+          poweredBy: props.poweredBy || 'WPPConnect-Server',
+          catchQR: (base64Qr, asciiQR, attempt, urlCode) => {
+            this.exportQR(base64Qr, client, urlCode);
+          },
+          statusFind: (statusFind) => {
+            try {
+              if (statusFind === 'autocloseCalled' || statusFind === 'desconnectedMobile') {
+                client.close();
+                this.sessions = { ...this.sessions, [props.session]: undefined };
+              }
+
+              // TODO: implement webhook
+              // callWebHook(client, req, 'status-find', { status: statusFind });
+            } catch (error: any) {
+              throw new Error(error);
+            }
+          },
+        },
+      );
+
+      Object.assign(client, { instance: wppClient });
+      this.sessions = { ...this.sessions, [props.session]: client };
+      await this.start(client);
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
+
+  async stopSession(session: string) {
+    try {
+      const client: Whatsapp = this.getClient(session);
+
+      // @ts-ignore
+      await client.instance.close();
+      this.sessions = { ...this.sessions, [session]: undefined };
+    } catch (e: any) {
+      throw new Error(e);
+    }
   }
 }
 

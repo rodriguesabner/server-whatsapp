@@ -1,8 +1,14 @@
 import { Whatsapp } from '@wppconnect-team/wppconnect';
 
 class BaseEngine {
-  getClient(sessions: [{key: string}], session: string): Whatsapp {
-    const copySession: any = sessions;
+  public sessions: any;
+
+  constructor({ sessions }: {sessions: any}) {
+    this.sessions = sessions;
+  }
+
+  getClient(session: string): Whatsapp {
+    const copySession: any = this.sessions;
     const client: Whatsapp = copySession[session];
 
     if (!client) {
