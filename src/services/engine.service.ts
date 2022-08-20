@@ -1,16 +1,17 @@
 import { create, Whatsapp } from '@wppconnect-team/wppconnect';
-import { getClient } from '../common/baseEngine';
+import BaseEngine from '../common/baseEngine';
 
-class EngineService {
+class EngineService extends BaseEngine {
   private sessions: any;
 
   constructor({ sessions }: {sessions: any}) {
+    super();
     this.sessions = sessions;
   }
 
   async createSession(props: any) {
     try {
-      const client: Whatsapp = getClient(this.sessions, props.session);
+      const client: Whatsapp = this.getClient(this.sessions, props.session);
 
       const wppClient = await create(
         {
@@ -48,6 +49,7 @@ class EngineService {
     try {
       await client.instance.isConnected();
       Object.assign(client, { status: 'CONNECTED', qrcode: null });
+      this.sessions = { ...this.sessions, [client.session]: client };
 
       // TODO: implement webhook
       // callWebHook(client, req, 'session-logged', { status: 'CONNECTED'});
@@ -62,6 +64,8 @@ class EngineService {
       qrcode: qrCode,
       urlCode,
     });
+
+    this.sessions = { ...this.sessions, [client.session]: client };
 
     const newQrCode = qrCode.replace('data:image/png;base64,', '');
     const imageBuffer = Buffer.from(qrCode, 'base64');
