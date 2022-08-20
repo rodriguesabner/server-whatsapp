@@ -15,7 +15,8 @@ export default class MessageRoute extends BaseRoute {
   @route('/session/start')
   @POST()
   async start(req: Request, res: Response) {
-    const { session, deviceName, poweredBy } = req.body;
+    const { FROM_PHONE_NUMBER_ID: session } = req.params;
+    const { deviceName, poweredBy } = req.body;
 
     try {
       const props = {
