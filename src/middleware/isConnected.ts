@@ -1,13 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
+import { asValue } from 'awilix';
 
 async function isConnected(req: Request, res: Response, next: NextFunction) {
   // @ts-ignore
-  const whatsapp = req.container.resolve('whatsapp');
-  try {
-    if (whatsapp) {
-      await whatsapp.isConnected();
-      next();
+  const { container } = req;
+  const { FROM_PHONE_NUMBER_ID: sessionName } = req.params;
 
+  const sessions = container.resolve('sessions');
+  try {
+    if (sessions && sessions[sessionName].instance) {
+      const { instance } = sessions[sessionName];
+      await instance.isConnected();
+
+      Object.assign(req, {
+        sessionName,
+        whatsapp: instance,
+      });
+
+      container.register({
+        scope: asValue(req),
+      });
+
+      next();
       return;
     }
 

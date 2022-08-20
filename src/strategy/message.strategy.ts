@@ -4,8 +4,11 @@ import { MessageProps } from '../interface/message';
 class MessageStrategy {
   private messageService: MessageService;
 
+  private sessionName: string;
+
   constructor(opts: any) {
     this.messageService = opts.messageService;
+    this.sessionName = opts.sessionName;
   }
 
   strategySendMessage(type: string, props: MessageProps) {

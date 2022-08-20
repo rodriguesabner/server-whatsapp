@@ -4,8 +4,8 @@ import { MessageProps } from '../interface/message';
 class MessageService {
   private whatsapp: Whatsapp;
 
-  constructor({ whatsapp }: { whatsapp: Whatsapp }) {
-    this.whatsapp = whatsapp;
+  constructor(opts: any) {
+    this.whatsapp = opts.scope.whatsapp;
   }
 
   sanitizePhone(phone: string): Array<string> {

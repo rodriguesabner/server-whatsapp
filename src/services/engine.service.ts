@@ -1,39 +1,20 @@
 import { create, Whatsapp } from '@wppconnect-team/wppconnect';
-import { EventEmitter } from 'events';
+import { getClient } from '../common/baseEngine';
 
-class EngineStrategy {
+class EngineService {
   private sessions: any;
 
-  private eventEmitter: EventEmitter;
-
-  constructor({ sessions, eventEmitter }: {
-    sessions: any,
-    eventEmitter: EventEmitter
-  }) {
+  constructor({ sessions }: {sessions: any}) {
     this.sessions = sessions;
-    this.eventEmitter = eventEmitter;
   }
 
-  getClient(session: string): Whatsapp {
-    const client: Whatsapp = this.sessions[session];
-
-    if (!client) {
-      this.sessions[session] = {
-        session,
-        status: null,
-      };
-    }
-
-    return client;
-  }
-
-  async createSession(session: string, props: any) {
+  async createSession(props: any) {
     try {
-      const client: Whatsapp = this.getClient(session);
+      const client: Whatsapp = getClient(this.sessions, props.session);
 
       const wppClient = await create(
         {
-          session,
+          session: props.session,
           deviceName: props.deviceName,
           poweredBy: props.poweredBy || 'WPPConnect-Server',
           catchQR: (base64Qr, asciiQR, attempt, urlCode) => {
@@ -41,11 +22,9 @@ class EngineStrategy {
           },
           statusFind: (statusFind) => {
             try {
-              this.eventEmitter.emit(`status-${client.session}`, client, statusFind);
-
               if (statusFind === 'autocloseCalled' || statusFind === 'desconnectedMobile') {
                 client.close();
-                this.sessions[session] = undefined;
+                this.sessions[props.session] = undefined;
               }
 
               // TODO: implement webhook
@@ -57,18 +36,20 @@ class EngineStrategy {
         },
       );
 
-      this.sessions[session] = Object.assign(wppClient, client);
+      Object.assign(client, { instance: wppClient });
+      this.sessions = { ...this.sessions, [props.session]: client };
       await this.start(client);
     } catch (e: any) {
       throw new Error(e);
     }
   }
 
-  async start(client: Whatsapp) {
+  async start(client: any) {
     try {
-      await client.isConnected();
+      await client.instance.isConnected();
       Object.assign(client, { status: 'CONNECTED', qrcode: null });
 
+      // TODO: implement webhook
       // callWebHook(client, req, 'session-logged', { status: 'CONNECTED'});
     } catch (error: any) {
       throw new Error(error);
@@ -76,7 +57,6 @@ class EngineStrategy {
   }
 
   exportQR(qrCode: string, client: Whatsapp, urlCode?: string) {
-    this.eventEmitter.emit(`qrcode-${client.session}`, qrCode, urlCode, client);
     Object.assign(client, {
       status: 'QRCODE',
       qrcode: qrCode,
@@ -91,4 +71,4 @@ class EngineStrategy {
   }
 }
 
-export default EngineStrategy;
+export default EngineService;

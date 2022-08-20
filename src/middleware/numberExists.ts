@@ -15,10 +15,10 @@ const sanitizePhoneNumber = (phoneList: [string]) => {
 };
 
 async function numberExists(req: Request, res: Response, next: NextFunction) {
-  try {
-    // @ts-ignore
-    const whatsapp = req.container.resolve('whatsapp');
+  // @ts-ignore
+  const { whatsapp } = req;
 
+  try {
     if (!req.body.to) {
       throw new Error('Phone is required');
     }
