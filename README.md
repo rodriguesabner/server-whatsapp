@@ -63,7 +63,7 @@ To run this project, you will need to add the following environment variables to
 | :-------- | :------- | :------------------------- |
 | `FROM_PHONE_NUMBER_ID` | `string` | **Required**. Session name or Number Device |
 
-#### Send Message
+#### Send Text Message
 
 ```http
   POST /${FROM_PHONE_NUMBER_ID}/messages
