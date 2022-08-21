@@ -15,7 +15,7 @@ Node, Express, Typescript, Awilix, WPPConnect
 Clone the project
 
 ```bash
-  git clone https://github.com/rodriguesabner
+  git clone https://github.com/rodriguesabner/server-whatsapp
 ```
 
 Go to the project directory
@@ -95,5 +95,5 @@ Check interface to send another types (location, image...): https://github.com/r
 - Add docs
 ## Authors
 
-- [@rodriguesabner](https://www.github.com/rodriguesbaner)
+- [@rodriguesabner](https://www.github.com/rodriguesabner)
 
