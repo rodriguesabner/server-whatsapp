@@ -77,7 +77,7 @@ Body:
 
 ```json
 {
-	"to": "NUMBER_HERE@c.us, MULTIPLE_NUMBERS_ACCEPTED@c.us",
+	"to": "NUMBER_HERE, MULTIPLE_NUMBERS_ACCEPTED",
 	"type": "text",
 	"recipient_type": "individual",
 	"text": {
