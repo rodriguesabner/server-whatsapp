@@ -12,7 +12,7 @@ class EngineService extends BaseEngine {
   async start(client: any) {
     try {
       await client.instance.isConnected();
-      Object.assign(client, { status: 'CONNECTED', qrcode: null });
+      Object.assign(client, { status: 'Connected', qrcode: null });
       this.sessions = { ...this.sessions, [client.session]: client };
 
       // TODO: implement webhook

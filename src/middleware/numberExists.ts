@@ -1,32 +1,48 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { WhatsappProfile } from '@wppconnect-team/wppconnect';
 
-const sanitizePhoneNumber = (phoneList: [string]) => {
-  const phones = phoneList;
+const sanitizePhoneNumberTypeIndividual = (phoneList: string, type: string) : string[] => {
+  const arr: string[] = [];
+  const phones = phoneList.split(',');
+
   phones.forEach((phone: string) => {
     let phoneNumber = phone.replace(/[^\d]/g, '');
 
-    if (!phoneNumber.includes('@c.us')) {
-      phoneNumber = `${phoneNumber}@c.us`;
+    if (type === 'individual') {
+      if (!phoneNumber.includes('@c.us')) {
+        phoneNumber = `${phoneNumber}@c.us`;
+      }
+    } else if (type === 'group') {
+      if (!phoneNumber.includes('@g.us')) {
+        phoneNumber = `${phoneNumber}@g.us`;
+      }
     }
 
-    return phoneNumber;
+    arr.push(phoneNumber);
   });
+
+  return arr;
 };
 
 async function numberExists(req: Request, res: Response, next: NextFunction) {
   // @ts-ignore
   const { whatsapp } = req;
+  const { to, recipient_type } = req.body;
 
   try {
-    if (!req.body.to) {
-      throw new Error('Phone is required');
+    if (!to) {
+      throw new Error('to param is required');
     }
 
-    const phones = req.body.to.split(',');
+    if (!recipient_type) {
+      throw new Error('recipient_type param is required');
+    }
+
+    const sanitizedPhones = sanitizePhoneNumberTypeIndividual(to, recipient_type);
+
     const tasksValidPhone: any = [];
 
-    phones.forEach((phone: string) => {
+    sanitizedPhones.forEach((phone: string) => {
       tasksValidPhone.push(
         whatsapp.checkNumberStatus(phone.trim())
           .catch((): any => null),
