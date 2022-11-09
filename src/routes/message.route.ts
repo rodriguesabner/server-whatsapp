@@ -21,17 +21,19 @@ export default class MessageRoute extends BaseRoute {
   @POST()
   async sendMessage(req: Request, res: Response) {
     const {
-      recipient_type, to, type, text, image, location,
+      recipient_type, to, type, text, image, location, reaction, interactive,
     } = req.body;
 
     try {
       const props: MessageProps = {
         recipient_type,
         to,
-        text,
         type,
+        text,
         image,
         location,
+        reaction,
+        interactive,
       };
 
       const messageStrategy = new MessageStrategy({ messageService: this.messageService });

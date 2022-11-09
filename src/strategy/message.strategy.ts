@@ -21,6 +21,10 @@ class MessageStrategy {
         return this.messageService.sendVideo(props);
       case 'location':
         return this.messageService.sendLocation(props);
+      case 'reaction':
+        return this.messageService.sendReaction(props);
+      case 'interactive':
+        return this.messageService.sendInteractiveMessage(props);
       default:
         throw new Error(`Message Type ${type} not found!`);
     }

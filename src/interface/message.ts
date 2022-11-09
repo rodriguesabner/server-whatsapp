@@ -5,6 +5,8 @@ enum ETypeMessage {
     image='image',
     video='video',
     sticker='sticker',
+    reaction='reaction',
+    interactive='interactive',
 }
 
 enum ETypeRecipient {
@@ -32,13 +34,39 @@ interface IMessageLocationProps {
     address: string;
 }
 
+interface IMessageReactionProps {
+    message_id: string;
+    emoji: string | boolean;
+}
+
+type MessageButtonsTypes = {
+    id: string;
+    text: string;
+} | {
+    phoneNumber: string;
+    text: string;
+} | {
+    url: string;
+    text: string;
+};
+
+interface IMessageInteractiveProps {
+    body: string;
+    useTemplateButtons: boolean | null
+    title?: string
+    footer?: string
+    buttons?: Array<MessageButtonsTypes>,
+}
+
 interface MessageProps {
     to: string;
     type: ETypeMessage;
     recipient_type: ETypeRecipient
     text?: IMessageTextProps;
     image?: IMessageImageProps,
-    location?: IMessageLocationProps
+    location?: IMessageLocationProps,
+    reaction?: IMessageReactionProps,
+    interactive?: IMessageInteractiveProps,
 }
 
 export {

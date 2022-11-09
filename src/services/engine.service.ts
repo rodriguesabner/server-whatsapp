@@ -1,4 +1,4 @@
-import { create, Whatsapp } from '@wppconnect-team/wppconnect';
+import { create, Message, Whatsapp } from '@wppconnect-team/wppconnect';
 import BaseEngine from '../common/baseEngine';
 
 class EngineService extends BaseEngine {

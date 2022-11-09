@@ -53,6 +53,9 @@ To run this project, you will need to add the following environment variables to
 
 ## API Reference
 
+Collection Postman 👇
+https://www.postman.com/rodriguesabner/workspace/wppconnect
+
 #### Starting new session
 
 ```http

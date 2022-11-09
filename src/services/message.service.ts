@@ -84,7 +84,7 @@ class MessageService {
       const ret = await Promise.all(tasks);
       return {
         messaging_product: 'whatsapp',
-        type: 'image',
+        type: 'video',
         contacts: [...phones],
         messages: ret.map((r: Message) => r.id),
       };
@@ -113,8 +113,58 @@ class MessageService {
       const ret = await Promise.all(tasks);
       return {
         messaging_product: 'whatsapp',
-        type: 'image',
+        type: 'location',
         contacts: [...phones],
+        messages: ret.map((r: Message) => r.id),
+      };
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
+
+  async sendReaction(props: MessageProps) {
+    try {
+      const ret = await this.whatsapp.sendReactionToMessage(
+            <string>props.reaction?.message_id,
+            // @ts-ignore
+            props.reaction?.emoji,
+      );
+
+      return {
+        messaging_product: 'whatsapp',
+        type: 'reaction',
+        contacts: [props.to],
+        messages: ret.sendMsgResult,
+      };
+    } catch (e: any) {
+      throw new Error(e);
+    }
+  }
+
+  async sendInteractiveMessage(props: MessageProps) {
+    try {
+      const phones = this.sanitizePhone(props.to);
+      const tasks: any = [];
+
+      phones.forEach((phone) => {
+        tasks.push(
+          this.whatsapp.sendText(
+            phone,
+            // @ts-ignore
+            props.interactive.body,
+            props.interactive?.buttons,
+            // @ts-ignore
+            props.interactive?.title,
+            props.interactive?.footer,
+          ),
+        );
+      });
+
+      const ret = await Promise.all(tasks);
+      return {
+        messaging_product: 'whatsapp',
+        type: 'interactive',
+        contacts: [props.to],
         messages: ret.map((r: Message) => r.id),
       };
     } catch (e: any) {
