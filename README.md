@@ -63,8 +63,8 @@ https://www.postman.com/rodriguesabner/workspace/wppconnect
   POST /${FROM_PHONE_NUMBER_ID}/start
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
+| Parameter              | Type     | Description                                 |
+|:-----------------------|:---------|:--------------------------------------------|
 | `FROM_PHONE_NUMBER_ID` | `string` | **Required**. Session name or Number Device |
 
 #### Send Text Message
@@ -73,9 +73,9 @@ https://www.postman.com/rodriguesabner/workspace/wppconnect
   POST /${FROM_PHONE_NUMBER_ID}/messages
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `FROM_PHONE_NUMBER_ID`      | `string` | **Required**. Session name or Number Device |
+| Parameter              | Type     | Description                                 |
+|:-----------------------|:---------|:--------------------------------------------|
+| `FROM_PHONE_NUMBER_ID` | `string` | **Required**. Session name or Number Device |
 
 Body:
 

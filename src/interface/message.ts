@@ -28,8 +28,8 @@ interface IMessageImageProps {
 }
 
 interface IMessageLocationProps {
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
     name: string;
     address: string;
 }

@@ -103,10 +103,9 @@ class MessageService {
         tasks.push(
           this.whatsapp.sendLocation(
             phone,
-            // @ts-ignore
-            props.location?.latitude,
-            props.location?.longitude,
-            props.location?.name,
+            <string>props.location?.latitude,
+            <string>props.location?.longitude,
+            <string>props.location?.name,
           ),
         );
       });
