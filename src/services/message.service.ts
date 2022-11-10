@@ -1,10 +1,11 @@
 import { Message, Whatsapp } from '@wppconnect-team/wppconnect';
 import { MessageProps } from '../interface/message';
+import { ContainerMessage } from '../interface/container';
 
 class MessageService {
   private whatsapp: Whatsapp;
 
-  constructor(opts: any) {
+  constructor(opts: ContainerMessage) {
     this.whatsapp = opts.scope.whatsapp;
   }
 

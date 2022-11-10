@@ -1,28 +1,32 @@
-import { create, Message, Whatsapp } from '@wppconnect-team/wppconnect';
+import { create, Message } from '@wppconnect-team/wppconnect';
 import BaseEngine from '../common/baseEngine';
+import { ClientProps, Container } from '../interface/container';
+import { CreateSessionProps } from '../interface/engine';
 
 class EngineService extends BaseEngine {
-  public sessions: any;
-
-  constructor({ sessions }: {sessions: any}) {
-    super({ sessions });
-    this.sessions = sessions;
+  constructor(opts: Container) {
+    super(opts);
+    this.sessions = opts.sessions;
   }
 
-  async start(client: any) {
+  async start(client: ClientProps) {
     try {
       await client.instance.isConnected();
       Object.assign(client, { status: 'Connected', qrcode: null });
       this.sessions = { ...this.sessions, [client.session]: client };
 
-      // TODO: implement webhook
-      // callWebHook(client, req, 'session-logged', { status: 'CONNECTED'});
+      this.callWebHook(client, 'session-logged', { status: 'CONNECTED' });
+
+      client.instance.onAnyMessage((message: Message) => {
+        const evt = message.from ? 'message-send' : 'message-received';
+        this.callWebHook(client, evt, { message });
+      });
     } catch (error: any) {
       throw new Error(error);
     }
   }
 
-  exportQR(qrCode: string, client: Whatsapp, urlCode?: string) {
+  exportQR(qrCode: string, client: ClientProps, urlCode?: string) {
     Object.assign(client, {
       status: 'QRCODE',
       qrcode: qrCode,
@@ -32,15 +36,12 @@ class EngineService extends BaseEngine {
     this.sessions = { ...this.sessions, [client.session]: client };
 
     const newQrCode = qrCode.replace('data:image/png;base64,', '');
-    const imageBuffer = Buffer.from(qrCode, 'base64');
-
-    // TODO: implement webhook
-    // callWebHook(client, req, 'qrcode', { qrcode: newQrCode, urlCode: urlCode });
+    this.callWebHook(client, 'qrcode', { qrcode: newQrCode, urlCode });
   }
 
-  async createSession(props: any) {
+  async createSession(props: CreateSessionProps) {
     try {
-      const client: Whatsapp = this.getClient(props.session);
+      const client: ClientProps = this.getClient(props.session);
 
       const wppClient = await create(
         {
@@ -53,12 +54,11 @@ class EngineService extends BaseEngine {
           statusFind: (statusFind) => {
             try {
               if (statusFind === 'autocloseCalled' || statusFind === 'desconnectedMobile') {
-                client.close();
+                client.instance.close();
                 this.sessions = { ...this.sessions, [props.session]: undefined };
               }
 
-              // TODO: implement webhook
-              // callWebHook(client, req, 'status-find', { status: statusFind });
+              this.callWebHook(client, 'status-find', { status: statusFind });
             } catch (error: any) {
               throw new Error(error);
             }
@@ -76,11 +76,13 @@ class EngineService extends BaseEngine {
 
   async stopSession(session: string) {
     try {
-      const client: Whatsapp = this.getClient(session);
+      const client: ClientProps = this.getClient(session);
 
       // @ts-ignore
       await client.instance.close();
-      this.sessions = { ...this.sessions, [session]: undefined };
+      delete this.sessions[session];
+
+      this.callWebHook(client, 'session-logout', { status: 'DISCONNECTED' });
     } catch (e: any) {
       throw new Error(e);
     }

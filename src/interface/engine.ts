@@ -4,11 +4,13 @@ interface SessionsProps {
     status: any,
 }
 
-interface Engine{
-
+interface CreateSessionProps {
+    session: string;
+    deviceName: string;
+    poweredBy?: string;
 }
 
 export {
   SessionsProps,
-  Engine,
+  CreateSessionProps,
 };

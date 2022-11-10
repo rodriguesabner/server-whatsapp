@@ -5,4 +5,8 @@ export default {
   },
   api: {
   },
+  webhook: {
+    active: process.env.WEBHOOK_ACTIVE || false,
+    url: process.env.WEBHOOK_URL || undefined,
+  },
 };

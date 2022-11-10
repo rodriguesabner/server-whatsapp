@@ -54,6 +54,7 @@ To run this project, you will need to add the following environment variables to
 ## API Reference
 
 Collection Postman 👇
+
 https://www.postman.com/rodriguesabner/workspace/wppconnect
 
 #### Starting new session
@@ -93,9 +94,6 @@ Check interface to send another types (location, image...): https://github.com/r
 ## Roadmap
 
 - Unit tests
-- Add message listener
-- Add webhook
-- Add docs
 ## Authors
 
 - [@rodriguesabner](https://www.github.com/rodriguesabner)

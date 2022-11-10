@@ -1,9 +1,9 @@
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
 import path from 'path';
 // @ts-ignore
 import { version } from '../../package.json';
 
-config();
+dotenv.config();
 
 const ENV = process.env.NODE_ENV || 'development';
 
