@@ -55,7 +55,7 @@ To run this project, you will need to add the following environment variables to
 
 Collection Postman 👇
 
-https://www.postman.com/rodriguesabner/workspace/wppconnect
+https://www.postman.com/gold-equinox-442131/workspace/wppconnect
 
 #### Starting new session
 
